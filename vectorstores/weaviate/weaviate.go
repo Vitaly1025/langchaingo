@@ -312,6 +312,17 @@ func (s Store) getOptions(options ...vectorstores.Option) vectorstores.Options {
 }
 
 func (s Store) createWhereBuilder(namespace string, filter any) (*filters.WhereBuilder, error) {
+	if namespace == _defaultNameSpace {
+		if filter == nil {
+			return nil, nil
+		}
+		whereFilter, ok := filter.(*filters.WhereBuilder)
+		if !ok {
+			return nil, ErrInvalidFilter
+		}
+		return whereFilter, nil
+	}
+
 	if filter == nil {
 		return filters.Where().WithPath([]string{s.nameSpaceKey}).WithOperator(filters.Equal).WithValueString(namespace), nil
 	}
