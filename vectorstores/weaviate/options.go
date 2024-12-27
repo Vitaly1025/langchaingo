@@ -98,6 +98,13 @@ func WithConnectionClient(connectionClient *http.Client) Option {
 	}
 }
 
+// WithTenant is an option for setting the specific tenant of the weaviate server.
+func WithTenant(tenant string) Option {
+	return func(p *Store) {
+		p.tenant = tenant
+	}
+}
+
 // WithQueryAttrs is an option for setting the query attributes of the weaviate server.
 func WithQueryAttrs(queryAttrs []string) Option {
 	return func(p *Store) {

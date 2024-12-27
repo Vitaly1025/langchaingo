@@ -48,6 +48,7 @@ type Store struct {
 	nameSpace string
 	host      string
 	scheme    string
+	tenant    string
 
 	// optional
 	apiKey *string
@@ -180,6 +181,7 @@ func (s Store) SimilaritySearch(
 		).
 		WithWhere(whereBuilder).
 		WithClassName(s.indexName).
+		WithTenant(s.tenant).
 		WithLimit(numDocuments).
 		WithFields(s.createFields()...).Do(ctx)
 	if err != nil {
@@ -208,6 +210,7 @@ func (s Store) MetadataSearch(
 		WithWhere(whereBuilder).
 		WithClassName(s.indexName).
 		WithLimit(numDocuments).
+		WithTenant(s.tenant).
 		WithFields(s.createFields()...).
 		Do(ctx)
 	if err != nil {
